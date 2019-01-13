@@ -1,5 +1,7 @@
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _class, _temp2;
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -26,7 +28,9 @@ var styles = {
   'betweenRange': 'Cal__Day__betweenRange'
 };
 
-var Day = function (_PureComponent) {
+import defaultSelectionRenderer from "./defaultSelectionRenderer";
+
+var Day = (_temp2 = _class = function (_PureComponent) {
   _inherits(Day, _PureComponent);
 
   function Day() {
@@ -51,58 +55,24 @@ var Day = function (_PureComponent) {
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  Day.prototype.renderSelection = function renderSelection(selectionColor) {
-    var _props = this.props,
-        day = _props.day,
-        date = _props.date,
-        isToday = _props.isToday,
-        todayLabel = _props.locale.todayLabel,
-        monthShort = _props.monthShort,
-        textColor = _props.theme.textColor,
-        selectionStyle = _props.selectionStyle;
-
-
-    return React.createElement(
-      'div',
-      {
-        className: styles.selection,
-        'data-date': date,
-        style: _extends({
-          backgroundColor: this.selectionColor,
-          color: textColor.active
-        }, selectionStyle)
-      },
-      React.createElement(
-        'span',
-        { className: styles.month },
-        isToday ? todayLabel.short || todayLabel.long : monthShort
-      ),
-      React.createElement(
-        'span',
-        { className: styles.day },
-        day
-      )
-    );
-  };
-
   Day.prototype.render = function render() {
     var _classNames;
 
-    var _props2 = this.props,
-        className = _props2.className,
-        currentYear = _props2.currentYear,
-        date = _props2.date,
-        day = _props2.day,
-        handlers = _props2.handlers,
-        isDisabled = _props2.isDisabled,
-        isHighlighted = _props2.isHighlighted,
-        isToday = _props2.isToday,
-        isSelected = _props2.isSelected,
-        monthShort = _props2.monthShort,
-        _props2$theme = _props2.theme,
-        selectionColor = _props2$theme.selectionColor,
-        todayColor = _props2$theme.todayColor,
-        year = _props2.year;
+    var _props = this.props,
+        className = _props.className,
+        currentYear = _props.currentYear,
+        date = _props.date,
+        day = _props.day,
+        handlers = _props.handlers,
+        isDisabled = _props.isDisabled,
+        isHighlighted = _props.isHighlighted,
+        isToday = _props.isToday,
+        isSelected = _props.isSelected,
+        monthShort = _props.monthShort,
+        _props$theme = _props.theme,
+        selectionColor = _props$theme.selectionColor,
+        todayColor = _props$theme.todayColor,
+        year = _props.year;
 
     var color = void 0;
 
@@ -135,11 +105,14 @@ var Day = function (_PureComponent) {
         { className: styles.year },
         year
       ),
-      isSelected && this.renderSelection()
+      isSelected && this.props.renderSelection(_extends({}, this.props, {
+        selectionColor: this.selectionColor
+      }))
     );
   };
 
   return Day;
-}(PureComponent);
-
+}(PureComponent), _class.defaultProps = {
+  renderSelection: defaultSelectionRenderer
+}, _temp2);
 export { Day as default };

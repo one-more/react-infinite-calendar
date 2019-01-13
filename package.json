@@ -22,6 +22,7 @@
     "lint": "eslint --fix src/**/*.js"
   },
   "dependencies": {
+    "@insin/extract-text-webpack-plugin": "^2.0.0-rc.2.e8e97806",
     "classnames": "^2.2.5",
     "date-fns": "^1.27.2",
     "dom-helpers": "^3.2.1",

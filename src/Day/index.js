@@ -2,8 +2,13 @@ import React, {PureComponent} from 'react';
 import classNames from 'classnames';
 import parse from 'date-fns/parse';
 import styles from './Day.scss';
+import defaultSelectionRenderer from "./defaultSelectionRenderer";
 
 export default class Day extends PureComponent {
+  static defaultProps = {
+    renderSelection: defaultSelectionRenderer,
+  };
+
   handleClick = () => {
     let {date, isDisabled, onClick} = this.props;
 
@@ -11,35 +16,6 @@ export default class Day extends PureComponent {
       onClick(parse(date));
     }
   };
-
-  renderSelection(selectionColor) {
-    const {
-      day,
-      date,
-      isToday,
-      locale: {todayLabel},
-      monthShort,
-      theme: {textColor},
-      selectionStyle,
-    } = this.props;
-
-    return (
-      <div
-        className={styles.selection}
-        data-date={date}
-        style={{
-          backgroundColor: this.selectionColor,
-          color: textColor.active,
-          ...selectionStyle,
-        }}
-      >
-        <span className={styles.month}>
-          {isToday ? todayLabel.short || todayLabel.long : monthShort}
-        </span>
-        <span className={styles.day}>{day}</span>
-      </div>
-    );
-  }
   
   render() {
     const {
@@ -85,7 +61,12 @@ export default class Day extends PureComponent {
         {day === 1 &&
           currentYear !== year &&
           <span className={styles.year}>{year}</span>}
-        {isSelected && this.renderSelection()}
+        {isSelected && this.props.renderSelection(
+          {
+            ...this.props,
+            selectionColor: this.selectionColor,
+          }
+        )}
       </li>
     );
   }
